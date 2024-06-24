@@ -1,20 +1,16 @@
-import { Button } from "@nextui-org/react";
-import Link from "next/link";
 import React from "react";
-import { FaRegSmile } from "react-icons/fa";
+import { getMembers } from "../actions/memberActions";
+import MemberCard from "@/components/members/MemberCard";
 
-export default function MembersPage() {
+export default async function MembersPage() {
+	const members = await getMembers();
+
 	return (
-		<div>
-			<h3 className="text-3xl">MembersPage</h3>
-			<Button
-				as={Link}
-				href="/"
-				color="primary"
-				variant="bordered"
-				startContent={<FaRegSmile size={20} />}>
-				Click me
-			</Button>
+		<div className="mt-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-8">
+			{members &&
+				members.map((member) => (
+					<MemberCard key={member.id} member={member} />
+				))}
 		</div>
 	);
 }
